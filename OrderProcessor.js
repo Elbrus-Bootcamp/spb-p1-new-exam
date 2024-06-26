@@ -2,40 +2,19 @@ const fs = require('fs').promises;
 const { Order } = require('./db/models');
 
 class OrderProcessor {
-  static async loadDataFromFile(filePath) {
-    const dataString = await fs.readFile(filePath, 'utf8');
-    return dataString;
-  }
+  //* Метод для чтения файла
+  static async loadDataFromFile(filePath) {}
 
-  static reorganizeData(data) {
-    return data
-      .split('\n')
-      .map((el) => el.split(', '))
-      .map((el) => ({
-        customer: el[0],
-        order: el[1],
-        due_date: new Date(el[2]),
-      }));
-  }
+  //* Метод преобразования данных из файла в массив объектов без лишних данных
+  static reorganizeData(data) {}
 
-  static sortOrdersByDate(orders) {
-    return orders.toSorted(
-      (a, b) => new Date(a.due_date) - new Date(b.due_date)
-    );
-  }
+  //* Метод сортировки заказов по дате выполнения
+  static sortOrdersByDate(orders) {}
 
-  static async writeDataToDB(orders) {
-    try {
-      await Promise.all(
-        orders.map(async (order) => {
-          await Order.create(order);
-        })
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  //* Метод записи массива объектов заказов в базу данных
+  static async writeDataToDB(orders) {}
 
+  //* Метод вывода новых данных из базы (УЖЕ РЕАЛИЗОВАН)
   static async getOrdersDataFromDB() {
     try {
       const allOrders = await Order.findAll({ raw: true });
